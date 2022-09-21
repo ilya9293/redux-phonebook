@@ -5,36 +5,42 @@ import { nanoid } from 'nanoid';
 import Filter from '../Filter';
 import ContactList from '../ContactList';
 import * as storage from '../../services/localStorage';
+import { itemsAdd } from '../../redux/contacts/contactsAction';
 import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 const CONTACTSLOCALE = 'contacts';
 
 const App = () => {
   const [contacts, setContacts] = useState(storage.get(CONTACTSLOCALE) ?? []);
+  const state = useSelector(state => state);
+  console.log(state);
+  const dispatch = useDispatch();
 
   const [filter, setFilter] = useState('');
 
-  useEffect(() => {
-    storage.save(CONTACTSLOCALE, contacts);
-  }, [contacts]);
+  //   useEffect(() => {
+  //     storage.save(CONTACTSLOCALE, state);
+  //   }, [state]);
 
   const deleteContact = id => {
-    const filteredContacts = contacts.filter(contact => contact.id !== id);
-    setContacts(filteredContacts);
+    const filteredContacts = state.filter(contact => contact.id !== id);
+    //  dispatch(itemsAdd(filteredContacts));
   };
 
-  const handleFilter = () =>
-    contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase()));
+  //   const handleFilter = () =>
+  //     state.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase()));
 
   const handleChange = e => setFilter(e.target.value);
 
   const handleSubmit = (name, number) => {
-    const isName = contacts.some(contact => name.toLowerCase() === contact.name.toLowerCase());
+    const isName = state.some(contact => name.toLowerCase() === contact.name.toLowerCase());
     if (isName) {
       alert(`${name} is alredy in contacts`);
       return;
     }
-    setContacts(prevContacts => [...prevContacts, { name, number, id: nanoid() }]);
+    //  setContacts(prevContacts => [...prevContacts, { name, number, id: nanoid() }]);
+    // dispatch(itemsAdd(state));
   };
 
   return (
@@ -44,9 +50,9 @@ const App = () => {
       <h2 className={s.title}>Contacts</h2>
 
       <Filter filter={filter} handleChange={handleChange} />
-      {!!handleFilter().length && (
+      {/* {!!handleFilter().length && (
         <ContactList handleFilter={handleFilter()} deleteContact={deleteContact} />
-      )}
+      )} */}
     </div>
   );
 };

@@ -1,11 +1,14 @@
 import s from './ContactForm.module.css';
 // import { Component } from 'react';
 import PropTypes from 'prop-types';
+import { itemsAdd } from '../../redux/contacts/contactsAction';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 const ContactForm = ({ handleSubmit }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const dispatch = useDispatch();
 
   const handleChange = e => {
     switch (e.target.name) {
@@ -27,7 +30,8 @@ const ContactForm = ({ handleSubmit }) => {
 
   const pushSubmit = e => {
     e.preventDefault();
-    handleSubmit(name, number);
+    //  handleSubmit(name, number);
+    dispatch(itemsAdd(name, number));
     reset();
   };
 

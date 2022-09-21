@@ -1,8 +1,10 @@
-import combineReducers from 'react';
+import { combineReducers } from 'redux';
 
 const itemsReducer = (state = [], action) => {
   switch (action.type) {
     case 'contacts/add':
+      // console.log(state);
+      // console.log(action);
       return [...state, action.payload];
 
     default:
@@ -20,10 +22,9 @@ const filterReducer = (state = '', action) => {
   }
 };
 
-const contactsReducer = () =>
-  combineReducers({
-    items: itemsReducer,
-    filter: filterReducer,
-  });
+const contactsReducer = combineReducers({
+  items: itemsReducer,
+  filter: filterReducer,
+});
 
 export default contactsReducer;
