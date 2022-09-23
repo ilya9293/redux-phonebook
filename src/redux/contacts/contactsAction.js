@@ -1,9 +1,17 @@
-const itemsAdd = (...items) => ({
+import { nanoid } from 'nanoid';
+
+const itemsAdd = (name, number) => ({
   type: 'contacts/add',
   payload: {
-    name: items[0],
-    number: items[1],
+    name,
+    number,
+    id: nanoid(),
   },
+});
+
+const itemsRemove = contact => ({
+  type: 'contacts/remove',
+  payload: contact,
 });
 
 const filterSet = filter => ({
@@ -11,4 +19,4 @@ const filterSet = filter => ({
   payload: filter,
 });
 
-export { itemsAdd, filterSet };
+export { itemsAdd, itemsRemove, filterSet };

@@ -1,16 +1,25 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { itemsRemove } from '../../../redux/contacts/contactsAction';
 import PropTypes from 'prop-types';
 import s from './Button.module.css';
 
-function Button({ deleteContact, id }) {
+function Button({ id }) {
+  const contacts = useSelector(state => state.contacts);
+  const dispatch = useDispatch();
+
+  const deleteContact = () => {
+    const filteredContacts = contacts.items.filter(contact => contact.id !== id);
+    dispatch(itemsRemove(filteredContacts));
+  };
+
   return (
-    <button type="button" className={s.btn} onClick={() => deleteContact(id)}>
+    <button type="button" className={s.btn} onClick={deleteContact}>
       Delete
     </button>
   );
 }
 
 Button.propTypes = {
-  deleteContact: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
 };
 

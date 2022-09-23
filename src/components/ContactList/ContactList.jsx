@@ -1,16 +1,16 @@
-import PropTypes from 'prop-types';
 import Button from './Button';
+import PropTypes from 'prop-types';
 import s from './ContactList.module.css';
 import ContactListItem from './ContactListItem';
 
-function ContactList({ handleFilter, deleteContact }) {
+function ContactList({ handleFilter }) {
   return (
     <ul className={s.list}>
-      {handleFilter.map(({ id, name, number }) => {
+      {handleFilter().map(({ id, name, number }) => {
         return (
           <li key={id} className={s.listItem}>
             <ContactListItem name={name} number={number} />
-            <Button deleteContact={deleteContact} id={id} />
+            <Button id={id} />
           </li>
         );
       })}
@@ -19,7 +19,7 @@ function ContactList({ handleFilter, deleteContact }) {
 }
 
 ContactList.propTypes = {
-  handleFilter: PropTypes.array.isRequired,
+  handleFilter: PropTypes.func.isRequired,
 };
 
 export default ContactList;
