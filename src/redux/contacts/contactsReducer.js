@@ -10,9 +10,9 @@ const startedContacts = [
   { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
 ];
 
-const isContacts = !!storage.get(CONTACTSLOCALE).length
-  ? storage.get(CONTACTSLOCALE)
-  : startedContacts;
+const isContacts = !storage.get(CONTACTSLOCALE)?.length
+  ? startedContacts
+  : storage.get(CONTACTSLOCALE);
 
 const itemsReducer = (state = isContacts, action) => {
   switch (action.type) {
@@ -41,4 +41,4 @@ const contactsReducer = combineReducers({
   filter: filterReducer,
 });
 
-export default contactsReducer;
+export { itemsReducer, filterReducer, contactsReducer };
