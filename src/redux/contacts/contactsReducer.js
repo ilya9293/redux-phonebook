@@ -1,40 +1,42 @@
 import { combineReducers } from 'redux';
-import * as storage from '../../services/localStorage';
+import { createReducer } from '@reduxjs/toolkit';
+import { itemsAdd, itemsRemove, filterSet } from '../contacts/contactsAction';
+import isContacts from './intialStateForItems';
 
-const CONTACTSLOCALE = 'contacts';
+console.dir(itemsAdd);
 
-const startedContacts = [
-  { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-  { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-  { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-  { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-];
+const itemsReducer = createReducer(isContacts, builder => {
+  builder
+    .addCase(itemsAdd, (state, action) => [...state, action.payload])
+    .addCase(itemsRemove, (_, action) => action.payload);
+});
 
-const isContacts = !storage.get(CONTACTSLOCALE)?.length
-  ? startedContacts
-  : storage.get(CONTACTSLOCALE);
+const filterReducer = createReducer('', builder => {
+  builder.addCase(filterSet, (_, action) => action.payload);
+});
 
-const itemsReducer = (state = isContacts, action) => {
-  switch (action.type) {
-    case 'contacts/add':
-      return [...state, action.payload];
-    case 'contacts/remove':
-      return action.payload;
+// Old reducers
+// const itemsReducer = (state = isContacts, action) => {
+//   switch (action.type) {
+//     case 'contacts/add':
+//       return [...state, action.payload];
+//     case 'contacts/remove':
+//       return action.payload;
 
-    default:
-      return state;
-  }
-};
+//     default:
+//       return state;
+//   }
+// };
 
-const filterReducer = (state = '', action) => {
-  switch (action.type) {
-    case 'filter/set':
-      return action.payload;
+// const filterReducer = (state = '', action) => {
+//   switch (action.type) {
+//     case 'filter/set':
+//       return action.payload;
 
-    default:
-      return state;
-  }
-};
+//     default:
+//       return state;
+//   }
+// };
 
 const contactsReducer = combineReducers({
   items: itemsReducer,
