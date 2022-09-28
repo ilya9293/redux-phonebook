@@ -3,8 +3,6 @@ import { createReducer } from '@reduxjs/toolkit';
 import { itemsAdd, itemsRemove, filterSet } from '../contacts/contactsAction';
 import isContacts from './intialStateForItems';
 
-console.dir(itemsAdd);
-
 const itemsReducer = createReducer(isContacts, builder => {
   builder
     .addCase(itemsAdd, (state, action) => [...state, action.payload])

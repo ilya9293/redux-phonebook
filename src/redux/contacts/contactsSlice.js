@@ -1,7 +1,7 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit';
 import isContacts from './intialStateForItems';
 
-const itemsReducer = createSlice({
+const itemsSlice = createSlice({
   name: 'items',
   initialState: isContacts,
   reducers: {
@@ -20,3 +20,13 @@ const itemsReducer = createSlice({
     itemsRemove: (_, action) => action.payload,
   },
 });
+
+const filterSlice = createSlice({
+  name: 'filter',
+  initialState: '',
+  reducers: {
+    filterSet: (_, action) => action.payload,
+  },
+});
+
+export { itemsSlice, filterSlice };
